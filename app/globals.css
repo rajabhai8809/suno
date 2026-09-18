@@ -5,15 +5,16 @@
 }
 
 html {
-  background: #07070a;
+  background: #07070b;
   scroll-behavior: auto;
 }
 
 body {
   margin: 0;
-  background: #07070a;
-  color: #ffffff;
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100%;
+  background: #07070b;
+  color: #fff;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -22,21 +23,30 @@ body {
   box-sizing: border-box;
 }
 
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
 ::selection {
-  background: rgba(167, 139, 250, 0.35);
-  color: white;
+  background: rgba(167, 139, 250, 0.28);
+  color: #fff;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #07070a;
+  background: #07070b;
 }
 
 ::-webkit-scrollbar-thumb {
-  border: 3px solid #07070a;
+  border: 2px solid #07070b;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.12);
 }
@@ -45,7 +55,10 @@ body {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Lenis */
+/* -------------------------------------------------------
+   LENIS
+------------------------------------------------------- */
+
 html.lenis,
 html.lenis body {
   height: auto;
@@ -67,62 +80,867 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* Brand helpers */
-.text-gradient {
-  background: linear-gradient(
-    100deg,
-    #ffffff 0%,
-    #c4b5fd 34%,
-    #f0abfc 68%,
-    #ffffff 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* -------------------------------------------------------
+   ROOT
+------------------------------------------------------- */
+
+.suno-page {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: clip;
+  background:
+    radial-gradient(
+      circle at 50% 10%,
+      rgba(124, 58, 237, 0.07),
+      transparent 25%
+    ),
+    #07070b;
 }
 
-.section-kicker {
+.suno-container {
+  position: relative;
+  width: min(100% - 2rem, 1180px);
+  margin-inline: auto;
+}
+
+@media (min-width: 640px) {
+  .suno-container {
+    width: min(100% - 3rem, 1180px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .suno-container {
+    width: min(100% - 4rem, 1180px);
+  }
+}
+
+/* -------------------------------------------------------
+   BACKGROUND
+------------------------------------------------------- */
+
+.suno-background {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.suno-bg-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(110px);
+}
+
+.suno-bg-glow-1 {
+  left: -13rem;
+  top: -12rem;
+  width: 30rem;
+  height: 30rem;
+  background: rgba(124, 58, 237, 0.11);
+}
+
+.suno-bg-glow-2 {
+  right: -12rem;
+  top: 35%;
+  width: 28rem;
+  height: 28rem;
+  background: rgba(217, 70, 239, 0.08);
+}
+
+.suno-bg-glow-3 {
+  left: 20%;
+  bottom: -15rem;
+  width: 32rem;
+  height: 32rem;
+  background: rgba(37, 99, 235, 0.07);
+}
+
+.suno-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+  background-size: 70px 70px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+/* -------------------------------------------------------
+   SCROLL PROGRESS
+------------------------------------------------------- */
+
+.suno-progress-track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 2px;
+  background: transparent;
+}
+
+.suno-progress-line {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #8b5cf6,
+    #c084fc,
+    #f0abfc
+  );
+  box-shadow: 0 0 18px rgba(192, 132, 252, 0.45);
+}
+
+/* -------------------------------------------------------
+   NAV
+------------------------------------------------------- */
+
+.suno-header {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 80;
+  padding-top: 0.75rem;
+}
+
+.suno-nav {
+  display: flex;
+  height: 62px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.7rem 0 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(7, 7, 11, 0.58);
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.22),
+    inset 0 1px rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(22px);
+}
+
+.suno-nav nav a {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.38);
+  transition:
+    color 220ms ease,
+    transform 220ms ease;
+}
+
+.suno-nav nav a:hover {
+  color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.suno-nav-login {
+  padding: 0.65rem 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.suno-nav-login:hover {
+  color: #fff;
+}
+
+.suno-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 38px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font-size: 0.72rem;
+  font-weight: 700;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.suno-nav-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+.suno-menu-button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(255, 255, 255, 0.8);
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    transform 220ms ease;
+}
+
+.suno-menu-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.13);
+}
+
+.suno-menu-button:active {
+  transform: scale(0.95);
+}
+
+@media (min-width: 768px) {
+  .suno-menu-button {
+    display: none;
+  }
+}
+
+.suno-mobile-menu {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  background: rgba(12, 12, 16, 0.95);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(25px);
+}
+
+.suno-mobile-menu > a {
+  display: block;
+  padding: 0.85rem 0.9rem;
+  border-radius: 0.9rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.82rem;
+}
+
+.suno-mobile-menu > a:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+}
+
+.suno-mobile-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+  padding: 0.7rem 0.35rem 0.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.suno-mobile-actions a {
+  display: grid;
+  min-height: 44px;
+  place-items: center;
+  border-radius: 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.suno-mobile-actions a:first-child {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.suno-mobile-actions a:last-child {
+  background: #fff;
+  color: #000;
+}
+
+/* -------------------------------------------------------
+   TYPOGRAPHY
+------------------------------------------------------- */
+
+.suno-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  font-size: 0.68rem;
-  line-height: 1;
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  min-height: 29px;
+  padding: 0 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.025);
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.3);
 }
 
-.section-kicker::before {
+.suno-eyebrow span {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #c4b5fd;
+  box-shadow: 0 0 15px rgba(196, 181, 253, 0.7);
+}
+
+.suno-hero-title {
+  margin: 0;
+  font-size: clamp(4rem, 17vw, 8.5rem);
+  line-height: 0.83;
+  letter-spacing: -0.075em;
+  font-weight: 650;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.suno-hero-title > span {
+  display: block;
+}
+
+.suno-hero-title .muted {
+  color: rgba(255, 255, 255, 0.26);
+}
+
+.suno-hero-title .gradient {
+  background:
+    linear-gradient(
+      100deg,
+      #fff 0%,
+      #c4b5fd 32%,
+      #f0abfc 66%,
+      #fff 100%
+    );
+  background-size: 180% auto;
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  animation: suno-gradient 8s ease-in-out infinite alternate;
+}
+
+@keyframes suno-gradient {
+  from {
+    background-position: 0% center;
+  }
+
+  to {
+    background-position: 100% center;
+  }
+}
+
+.suno-hero-copy {
+  max-width: 34rem;
+  margin-top: 2rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.suno-section-title {
+  margin-top: 1.25rem;
+  font-size: clamp(2.7rem, 8vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  font-weight: 650;
+}
+
+.suno-section-title span {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.suno-manifesto-title {
+  margin-top: 1.4rem;
+  font-size: clamp(3rem, 9vw, 7.6rem);
+  line-height: 0.91;
+  letter-spacing: -0.067em;
+  font-weight: 650;
+}
+
+.suno-manifesto-title span {
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.suno-big-statement {
+  position: relative;
+  z-index: 2;
+  margin-top: 1.75rem;
+  font-size: clamp(4rem, 14vw, 10rem);
+  line-height: 0.82;
+  letter-spacing: -0.075em;
+  font-weight: 650;
+}
+
+.suno-big-statement span {
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.suno-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.suno-kicker::before {
   content: "";
-  width: 1.7rem;
+  width: 1.5rem;
   height: 1px;
   background: linear-gradient(
     90deg,
-    rgba(167, 139, 250, 0),
+    transparent,
     rgba(167, 139, 250, 0.8)
   );
 }
 
-/* Animated waveform */
-.wave-bar {
-  transform-origin: center;
-  animation: wavePulse 1.25s ease-in-out infinite alternate;
+/* -------------------------------------------------------
+   BUTTONS
+------------------------------------------------------- */
+
+.suno-primary-button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 0 1.35rem;
+  border-radius: 999px;
+  background: #fff;
+  color: #050507;
+  font-size: 0.76rem;
+  font-weight: 700;
+  box-shadow: 0 18px 45px rgba(255, 255, 255, 0.08);
+  transition:
+    transform 240ms ease,
+    box-shadow 240ms ease;
 }
 
-@keyframes wavePulse {
+.suno-primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 55px rgba(255, 255, 255, 0.13);
+}
+
+.suno-secondary-button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0 1.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.76rem;
+  font-weight: 600;
+  transition:
+    transform 240ms ease,
+    color 240ms ease,
+    background-color 240ms ease;
+}
+
+.suno-secondary-button:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.055);
+  color: #fff;
+}
+
+/* -------------------------------------------------------
+   HERO PLAYER
+------------------------------------------------------- */
+
+.suno-vinyl {
+  position: relative;
+  border-radius: 999px;
+  animation: suno-vinyl-spin 18s linear infinite;
+}
+
+@keyframes suno-vinyl-spin {
   from {
-    transform: scaleY(0.55);
-    opacity: 0.45;
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.suno-hero-glow {
+  animation: suno-breathe 4s ease-in-out infinite;
+}
+
+@keyframes suno-breathe {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+/* -------------------------------------------------------
+   WAVEFORM
+------------------------------------------------------- */
+
+.suno-wave {
+  display: flex;
+  height: 38px;
+  align-items: center;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.suno-wave span {
+  display: block;
+  width: 3px;
+  min-height: 4px;
+  flex: 1;
+  max-width: 4px;
+  transform-origin: center;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.65;
+  animation: suno-wave 1.15s ease-in-out infinite alternate;
+}
+
+@keyframes suno-wave {
+  from {
+    transform: scaleY(0.45);
+    opacity: 0.35;
   }
 
   to {
     transform: scaleY(1);
-    opacity: 0.95;
+    opacity: 0.9;
   }
 }
 
-/* Reduced motion */
+/* -------------------------------------------------------
+   ROOM STORY
+------------------------------------------------------- */
+
+.suno-number {
+  display: grid;
+  width: 2.05rem;
+  height: 2.05rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.025);
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.suno-story-card {
+  position: relative;
+  min-height: 320px;
+  padding: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 2rem;
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(139, 92, 246, 0.12),
+      transparent 35%
+    ),
+    rgba(255, 255, 255, 0.018);
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.25);
+}
+
+.suno-room-sticky {
+  position: sticky;
+  top: 120px;
+}
+
+.suno-visual-layer {
+  position: absolute;
+  inset: 1rem;
+}
+
+.suno-visual-layer:first-child {
+  position: relative;
+}
+
+.suno-room-visual {
+  height: 100%;
+  padding: 1.15rem;
+}
+
+.suno-room-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.suno-room-code-card {
+  margin-top: 2rem;
+  padding: 1.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1.4rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.suno-room-code-card p {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.suno-room-code-card strong {
+  display: block;
+  margin-top: 0.7rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: clamp(2rem, 7vw, 3.3rem);
+  letter-spacing: 0.15em;
+}
+
+.suno-room-code-card span {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  padding: 0 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.22);
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.suno-room-code-card span.success {
+  background: rgba(52, 211, 153, 0.07);
+  color: rgba(110, 231, 183, 0.8);
+}
+
+/* -------------------------------------------------------
+   LIBRARY
+------------------------------------------------------- */
+
+.suno-search-card {
+  min-width: 0;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 1.8rem;
+  background:
+    radial-gradient(
+      circle at 80% 15%,
+      rgba(124, 58, 237, 0.12),
+      transparent 34%
+    ),
+    rgba(255, 255, 255, 0.02);
+}
+
+.suno-song-row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.018);
+  transition:
+    transform 240ms ease,
+    background-color 240ms ease,
+    border-color 240ms ease;
+}
+
+.suno-song-row:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.035);
+  border-color: rgba(255, 255, 255, 0.11);
+}
+
+.suno-upload-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.suno-mini-button {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.58rem;
+  font-weight: 700;
+  transition:
+    background-color 220ms ease,
+    color 220ms ease;
+}
+
+.suno-mini-button:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* -------------------------------------------------------
+   FEATURES
+------------------------------------------------------- */
+
+.suno-feature-card {
+  position: relative;
+  min-width: 0;
+  min-height: 300px;
+  padding: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1.8rem;
+  background: rgba(255, 255, 255, 0.018);
+  transition:
+    transform 300ms ease,
+    border-color 300ms ease,
+    background-color 300ms ease;
+}
+
+.suno-feature-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.11);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.suno-feature-glow {
+  pointer-events: none;
+  position: absolute;
+  right: -4rem;
+  top: -4rem;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 999px;
+  background: rgba(124, 58, 237, 0.1);
+  filter: blur(60px);
+  opacity: 0;
+  transition: opacity 350ms ease;
+}
+
+.suno-feature-card:hover .suno-feature-glow {
+  opacity: 1;
+}
+
+/* -------------------------------------------------------
+   FINAL CTA
+------------------------------------------------------- */
+
+.suno-final-card {
+  position: relative;
+  overflow: hidden;
+  padding: 4.5rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2rem;
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(139, 92, 246, 0.17),
+      transparent 40%
+    ),
+    rgba(255, 255, 255, 0.02);
+}
+
+.suno-final-glow {
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18rem;
+  height: 18rem;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.08);
+  filter: blur(80px);
+}
+
+/* -------------------------------------------------------
+   RESPONSIVE
+------------------------------------------------------- */
+
+@media (min-width: 640px) {
+  .suno-nav {
+    height: 68px;
+  }
+
+  .suno-hero-title {
+    font-size: clamp(5rem, 13vw, 8.5rem);
+  }
+
+  .suno-hero-copy {
+    font-size: 1rem;
+  }
+
+  .suno-feature-card {
+    padding: 2rem;
+  }
+
+  .suno-final-card {
+    padding: 6rem 2rem;
+  }
+
+  .suno-upload-card {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .suno-story-card {
+    min-height: 480px;
+    padding: 1.25rem;
+  }
+
+  .suno-room-visual {
+    padding: 1.5rem;
+  }
+
+  .suno-search-card {
+    padding: 1.5rem;
+  }
+
+  .suno-feature-card {
+    min-height: 360px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .suno-page {
+    background:
+      radial-gradient(
+        circle at 50% 8%,
+        rgba(124, 58, 237, 0.085),
+        transparent 28%
+      ),
+      #07070b;
+  }
+}
+
+/* -------------------------------------------------------
+   REDUCED MOTION
+------------------------------------------------------- */
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -136,11 +954,11 @@ html.lenis body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
 
-/* Mobile tuning */
-@media (max-width: 640px) {
-  ::-webkit-scrollbar {
-    width: 6px;
+  .suno-vinyl,
+  .suno-wave span,
+  .suno-gradient,
+  .suno-hero-glow {
+    animation: none !important;
   }
 }

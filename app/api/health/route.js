@@ -6,7 +6,7 @@ export async function GET() {
 
     return Response.json({
       success: true,
-      app: "Syncly",
+      app: "suno",
       database: "connected",
     });
   } catch (error) {
@@ -15,7 +15,7 @@ export async function GET() {
     return Response.json(
       {
         success: false,
-        app: "Syncly",
+        app: "suno",
         database: "disconnected",
       },
       {

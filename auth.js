@@ -26,9 +26,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+
       authorization: {
         params: {
           prompt: "select_account",
+          scope: "openid email profile",
         },
       },
     }),
@@ -240,5 +242,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/login",
     error: "/auth/error",
   },
-  debug: process.env.NODE_ENV === "development",
+  debug: false,
 });

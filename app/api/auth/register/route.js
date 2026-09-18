@@ -89,11 +89,28 @@ export async function POST(request) {
     });
 
     try {
-      await sendVerificationEmail({
+      const emailSent = await sendVerificationEmail({
         email: user.email,
         name: user.name,
         token,
       });
+
+      if (!emailSent) {
+        console.error(
+          "[Suno] Verification email was not sent.",
+        );
+
+        return NextResponse.json(
+          {
+            success: false,
+            message:
+              "Account created, but the verification email could not be sent. Please try again.",
+          },
+          {
+            status: 503,
+          },
+        );
+      }
     } catch (mailError) {
       console.error("[Suno] Verification email failed:", mailError);
 

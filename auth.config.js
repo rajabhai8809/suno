@@ -13,6 +13,8 @@ const authPages = new Set([
 ]);
 
 export const authConfig = {
+  trustHost: true,
+
   pages: {
     signIn: "/login",
     error: "/auth/error",

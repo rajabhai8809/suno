@@ -18,6 +18,7 @@ const LOCK_DURATION_MS = 15 * 60 * 1000;
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  trustHost: true,
   session: {
     strategy: "jwt",
     maxAge: 7 * 24 * 60 * 60,

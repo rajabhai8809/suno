@@ -1,22 +1,10 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: "swap",
-  preload: true,
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-  preload: true,
-});
-
 const appUrl =
-  process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  process.env.NEXT_PUBLIC_APP_URL ||
+  "http://localhost:3000";
 
 export const metadata = {
   metadataBase: new URL(appUrl),
@@ -30,10 +18,6 @@ export const metadata = {
     "Suno is a shared listening platform where people can discover music, create rooms, and listen together in realtime.",
 
   applicationName: "Suno",
-
-  generator: "Next.js",
-
-  referrer: "origin-when-cross-origin",
 
   keywords: [
     "Suno",
@@ -91,11 +75,7 @@ export const metadata = {
   },
 
   icons: {
-    icon: [
-      {
-        url: "/favicon.ico",
-      },
-    ],
+    icon: "/favicon.ico",
   },
 
   formatDetection: {
@@ -110,21 +90,24 @@ export const viewport = {
   initialScale: 1,
   viewportFit: "cover",
   colorScheme: "dark",
-  themeColor: "#07070a",
+  themeColor: "#07070b",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full bg-[#07070a] font-sans text-white antialiased">
-        <div id="app-root" className="min-h-screen">
+      <body className="min-h-full bg-[#07070b] font-sans text-white antialiased">
+        <div
+          id="app-root"
+          className="min-h-screen"
+        >
           {children}
         </div>
       </body>
     </html>
   );
-} 
+}

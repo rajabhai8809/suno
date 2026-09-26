@@ -31,6 +31,38 @@ const SongSchema = new mongoose.Schema(
       maxlength: 160,
     },
 
+    genre: {
+      type: String,
+      trim: true,
+      default: "Other",
+      maxlength: 80,
+      index: true,
+    },
+
+    // Display/filter metadata. It is NOT used as MongoDB's text-search
+    // language selector.
+    language: {
+      type: String,
+      trim: true,
+      default: "Unknown",
+      maxlength: 80,
+      index: true,
+    },
+
+    // MongoDB text indexes default to the field named "language" as the
+    // per-document language override. That is wrong for our UI metadata
+    // values such as "Hindi", "Punjabi", etc.
+    //
+    // Keep a dedicated search-language field so arbitrary display languages
+    // can never be interpreted as MongoDB text-search languages.
+    sunoTextLanguage: {
+      type: String,
+      enum: ["none", "english"],
+      default: "none",
+      select: false,
+      immutable: true,
+    },
+
     originalFilename: {
       type: String,
       trim: true,
@@ -95,9 +127,12 @@ const SongSchema = new mongoose.Schema(
 );
 
 SongSchema.index({ uploaderId: 1, fileHash: 1 }, { unique: true });
-SongSchema.index({ status: 1, isActive: 1, createdAt: -1 });
+SongSchema.index({ status: 1, isActive: 1, createdAt: -1, _id: -1 });
 SongSchema.index({ artist: 1, title: 1 });
-SongSchema.index({ uploaderId: 1, createdAt: -1 });
+SongSchema.index({ uploaderId: 1, createdAt: -1, _id: -1 });
+SongSchema.index({ genre: 1, createdAt: -1, _id: -1 });
+SongSchema.index({ language: 1, createdAt: -1, _id: -1 });
+SongSchema.index({ title: 1, _id: 1 });
 
 SongSchema.index(
   { title: "text", artist: "text", album: "text" },
@@ -108,6 +143,8 @@ SongSchema.index(
       artist: 5,
       album: 2,
     },
+    default_language: "none",
+    language_override: "sunoTextLanguage",
   },
 );
 

@@ -3,10 +3,21 @@ import { auth } from "@/auth";
 import SunoAppShell from "@/components/suno/SunoAppShell";
 import RoomsPage from "@/components/rooms/RoomsPage";
 
-export const metadata = { title: "Rooms | Suno", description: "Create and join shared listening rooms." };
+export const metadata = {
+  title: "Rooms | Suno",
+  description: "Create a private Suno room and listen together with your people.",
+};
 
 export default async function RoomsRoute() {
   const session = await auth();
-  if (!session?.user?.id) redirect("/login");
-  return <SunoAppShell><RoomsPage /></SunoAppShell>;
+
+  if (!session?.user?.id) {
+    redirect("/login");
+  }
+
+  return (
+    <SunoAppShell>
+      <RoomsPage />
+    </SunoAppShell>
+  );
 }

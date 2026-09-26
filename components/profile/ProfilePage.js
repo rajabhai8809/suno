@@ -1,46 +1,24 @@
 "use client";
 
-import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { ArrowLeft, LogOut, Mail, ShieldCheck, UserRound, KeyRound, ChevronRight } from "lucide-react";
+import { signOut } from "next-auth/react";
+import { ArrowLeft, ChevronRight, Heart, KeyRound, LibraryBig, LogOut, Mail, ShieldCheck, UserRound } from "lucide-react";
 
 export default function ProfilePage({ user }) {
+  const initials = user?.name?.trim()?.split(/\s+/).map((x) => x[0]).join("").slice(0, 2).toUpperCase() || "S";
   return (
-    <div className="suno-profile-page">
-      <section className="suno-profile-hero">
-        <div className="suno-profile-avatar-large">{user?.name?.slice(0, 1)?.toUpperCase() || "S"}</div>
-        <div>
-          <span className="suno-section-overline">YOUR ACCOUNT</span>
-          <h1>{user?.name || "Suno user"}</h1>
-          <p>{user?.email || ""}</p>
-        </div>
+    <div className="space-y-5 sm:space-y-7">
+      <section className="relative overflow-hidden rounded-[2rem] border border-white/[0.07] bg-gradient-to-br from-violet-400/[0.09] via-white/[0.025] to-transparent p-5 sm:p-7 lg:p-9">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center"><div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.7rem] border border-violet-300/15 bg-gradient-to-br from-violet-300/20 to-fuchsia-300/10 text-xl font-semibold text-violet-100 shadow-2xl shadow-violet-950/20">{initials}</div><div className="min-w-0"><p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/25">Your account</p><h1 className="mt-2 truncate text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">{user?.name || "Suno user"}</h1><p className="mt-2 truncate text-sm text-white/40">{user?.email || ""}</p></div></div>
       </section>
 
-      <div className="suno-profile-grid">
-        <section className="suno-settings-card">
-          <div className="suno-settings-title"><div><span className="suno-section-overline">ACCOUNT</span><h2>Your details</h2></div><UserRound size={17} /></div>
-          <div className="suno-detail-list">
-            <div><span><UserRound size={15} /> Name</span><strong>{user?.name || "Not set"}</strong></div>
-            <div><span><Mail size={15} /> Email</span><strong>{user?.email || "Not set"}</strong></div>
-            <div><span><ShieldCheck size={15} /> Status</span><strong className="verified">Verified</strong></div>
-          </div>
-        </section>
-
-        <section className="suno-settings-card">
-          <div className="suno-settings-title"><div><span className="suno-section-overline">SECURITY</span><h2>Account controls</h2></div><KeyRound size={17} /></div>
-          <div className="suno-settings-links">
-            <Link href="/forgot-password"><span><KeyRound size={15} /><span><strong>Reset password</strong><small>Start a secure password reset</small></span></span><ChevronRight size={15} /></Link>
-            <Link href="/library"><span><Mail size={15} /><span><strong>Your library</strong><small>Browse your shared music</small></span></span><ChevronRight size={15} /></Link>
-          </div>
-        </section>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <section className="rounded-3xl border border-white/[0.07] bg-white/[0.025] p-5 sm:p-6"><div className="flex items-start justify-between"><div><p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/20">Account</p><h2 className="mt-1 text-lg font-semibold">Your details</h2></div><UserRound className="h-5 w-5 text-white/25" /></div><div className="mt-6 space-y-2"><div className="rounded-2xl border border-white/[0.06] bg-black/10 p-3.5"><div className="flex items-center gap-3"><UserRound className="h-4 w-4 text-white/30" /><span className="text-xs text-white/30">Name</span><strong className="ml-auto max-w-[55%] truncate text-xs text-white/75">{user?.name || "Not set"}</strong></div></div><div className="rounded-2xl border border-white/[0.06] bg-black/10 p-3.5"><div className="flex items-center gap-3"><Mail className="h-4 w-4 text-white/30" /><span className="text-xs text-white/30">Email</span><strong className="ml-auto max-w-[55%] truncate text-xs text-white/75">{user?.email || "Not set"}</strong></div></div><div className="rounded-2xl border border-emerald-300/10 bg-emerald-300/[0.04] p-3.5"><div className="flex items-center gap-3"><ShieldCheck className="h-4 w-4 text-emerald-300/70" /><span className="text-xs text-white/30">Status</span><strong className="ml-auto text-xs text-emerald-200">Verified</strong></div></div></div></section>
+        <section className="rounded-3xl border border-white/[0.07] bg-white/[0.025] p-5 sm:p-6"><div className="flex items-start justify-between"><div><p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/20">Account controls</p><h2 className="mt-1 text-lg font-semibold">Quick access</h2></div><KeyRound className="h-5 w-5 text-white/25" /></div><div className="mt-6 space-y-2"><Link href="/forgot-password" prefetch className="flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-black/10 p-3.5 hover:bg-white/[0.04]"><KeyRound className="h-4 w-4 text-white/30" /><span className="min-w-0 flex-1"><strong className="block text-xs text-white/75">Reset password</strong><small className="mt-1 block text-[10px] text-white/25">Start a secure password reset</small></span><ChevronRight className="h-4 w-4 text-white/20" /></Link><Link href="/library" prefetch className="flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-black/10 p-3.5 hover:bg-white/[0.04]"><LibraryBig className="h-4 w-4 text-white/30" /><span className="min-w-0 flex-1"><strong className="block text-xs text-white/75">Shared library</strong><small className="mt-1 block text-[10px] text-white/25">Browse and play music</small></span><ChevronRight className="h-4 w-4 text-white/20" /></Link><Link href="/favorites" prefetch className="flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-black/10 p-3.5 hover:bg-white/[0.04]"><Heart className="h-4 w-4 text-white/30" /><span className="min-w-0 flex-1"><strong className="block text-xs text-white/75">Favorites</strong><small className="mt-1 block text-[10px] text-white/25">Your saved music space</small></span><ChevronRight className="h-4 w-4 text-white/20" /></Link></div></section>
       </div>
 
-      <section className="suno-danger-card">
-        <div><span className="suno-section-overline">SESSION</span><h2>Sign out of Suno</h2><p>You can sign back in any time.</p></div>
-        <button type="button" onClick={() => signOut({ callbackUrl: "/" })}><LogOut size={15} /> Sign out</button>
-      </section>
-
-      <Link href="/dashboard" className="suno-back-link"><ArrowLeft size={14} /> Back to home</Link>
+      <section className="flex flex-col gap-4 rounded-3xl border border-rose-300/10 bg-rose-300/[0.035] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6"><div><p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/20">Session</p><h2 className="mt-1 text-base font-semibold">Sign out of Suno</h2><p className="mt-1 text-xs text-white/30">You can sign back in any time.</p></div><button type="button" onClick={() => signOut({ callbackUrl: "/" })} className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-rose-300/15 bg-rose-300/5 px-4 text-xs font-semibold text-rose-100 hover:bg-rose-300/10"><LogOut className="h-4 w-4" /> Sign out</button></section>
+      <Link href="/dashboard" prefetch className="inline-flex items-center gap-2 text-xs font-semibold text-white/35 hover:text-white"><ArrowLeft className="h-3.5 w-3.5" /> Back to home</Link>
     </div>
   );
 }

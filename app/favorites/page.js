@@ -2,29 +2,6 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import SunoAppShell from "@/components/suno/SunoAppShell";
 import Link from "next/link";
-import { Heart, LibraryBig, ArrowRight } from "lucide-react";
-
+import { ArrowRight, Heart, LibraryBig, Sparkles } from "lucide-react";
 export const metadata = { title: "Favorites | Suno", description: "Your favorite Suno tracks." };
-
-export default async function FavoritesRoute() {
-  const session = await auth();
-  if (!session?.user?.id) redirect("/login");
-  return (
-    <SunoAppShell>
-      <div className="suno-favorites-page">
-        <section className="suno-simple-page-hero">
-          <span className="suno-eyebrow-pill"><Heart size={12} /> YOUR SPACE</span>
-          <h1>Keep the <span>songs you love.</span></h1>
-          <p>Your favorites surface is ready for the saved-song state layer. For now, use the shared library to discover tracks.</p>
-        </section>
-        <div className="suno-favorites-empty">
-          <div><Heart size={21} /></div>
-          <h2>Your favorites will live here.</h2>
-          <p>Browse the shared library and keep the tracks you want close once favorites storage is connected.</p>
-          <Link href="/library">Explore the library <ArrowRight size={14} /></Link>
-        </div>
-        <Link href="/dashboard" className="suno-back-link"><LibraryBig size={14} /> Back to home</Link>
-      </div>
-    </SunoAppShell>
-  );
-}
+export default async function FavoritesRoute() { const session = await auth(); if (!session?.user?.id) redirect("/login"); return <SunoAppShell><div className="space-y-6 sm:space-y-8"><section className="relative overflow-hidden rounded-[2rem] border border-white/[0.07] bg-gradient-to-br from-rose-400/[0.07] via-violet-400/[0.04] to-transparent p-5 sm:p-7 lg:p-9"><Sparkles className="h-5 w-5 text-rose-200/60" /><p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/20">Your space</p><h1 className="mt-2 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Keep the songs you love.</h1><p className="mt-3 max-w-2xl text-sm leading-6 text-white/40">Favorites can be surfaced here once the saved-song state is connected.</p></section><section className="flex min-h-72 flex-col items-center justify-center rounded-3xl border border-dashed border-white/[0.08] bg-white/[0.015] px-5 text-center"><div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/[0.07] bg-white/[0.03] text-rose-200/70"><Heart className="h-6 w-6" /></div><h2 className="mt-5 text-base font-semibold">Your favorites will live here.</h2><p className="mt-2 max-w-md text-xs leading-5 text-white/30">Explore the shared library and keep the tracks you want close.</p><Link href="/library" prefetch className="mt-5 inline-flex h-10 items-center gap-2 rounded-xl bg-white px-3.5 text-xs font-semibold text-black">Explore the library <ArrowRight className="h-3.5 w-3.5" /></Link></section><Link href="/dashboard" prefetch className="inline-flex items-center gap-2 text-xs font-semibold text-white/35 hover:text-white"><LibraryBig className="h-3.5 w-3.5" /> Back to home</Link></div></SunoAppShell>; }

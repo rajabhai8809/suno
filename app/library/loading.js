@@ -1,0 +1,1 @@
+export default function Loading() { return <div className="space-y-4"><div className="h-52 animate-pulse rounded-[2rem] bg-white/[0.025]" /><div className="h-16 animate-pulse rounded-3xl bg-white/[0.025]" /><div className="space-y-2">{Array.from({length:6}).map((_,i)=><div key={i} className="h-20 animate-pulse rounded-2xl bg-white/[0.025]" />)}</div></div>; }

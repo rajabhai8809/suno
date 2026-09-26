@@ -5,15 +5,12 @@ import Library from "@/components/library/Library";
 
 export const metadata = {
   title: "Library | Suno",
-  description: "Discover, search and play music from the Suno community.",
+  description: "Discover and play music from the Suno community.",
 };
 
 export default async function LibraryPage() {
   const session = await auth();
-
-  if (!session?.user?.id) {
-    redirect("/login");
-  }
+  if (!session?.user?.id) redirect("/login");
 
   return (
     <SunoAppShell>
